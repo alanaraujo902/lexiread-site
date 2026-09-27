@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Excluir conta — LexiRead</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<main class="narrow">
+  <h1>Excluir sua conta LexiRead</h1>
+  <p>Apaga sua conta, seu saldo de cartões com IA, seu histórico de uso e qualquer backup na nuvem. Os livros e os cartões salvos no seu celular continuam lá. Os registros das compras feitas pelo Google Play ficam guardados pelo prazo legal, sem ligação com a conta. Não dá para desfazer.</p>
+  <p><b>Uma assinatura ativa não é cancelada por aqui.</b> Cancele antes na Play Store (Pagamentos e assinaturas → Assinaturas), senão o Google continua cobrando.</p>
+  <p>Você também pode excluir pelo app: Configurações → Conta LexiRead → Excluir conta.</p>
+
+  <section id="step-email">
+    <input id="email" type="email" placeholder="seu@email.com" autocomplete="email">
+    <button id="send">Enviar código</button>
+  </section>
+  <section id="step-code" class="hidden">
+    <p>Enviamos um código de 6 dígitos para <b id="sent-to"></b>.</p>
+    <input id="code" inputmode="numeric" maxlength="10" placeholder="Código">
+    <button id="verify">Confirmar código</button>
+  </section>
+  <section id="step-delete" class="hidden">
+    <p>Conta encontrada: <b id="who"></b>.</p>
+    <button id="delete" class="danger">Excluir minha conta para sempre</button>
+  </section>
+  <p id="msg" role="status"></p>
+</main>
+<footer><a href="privacidade.html">Privacidade</a><a href="termos.html">Termos de uso</a><a href="mailto:lexiread.english@gmail.com">lexiread.english@gmail.com</a></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // The project's URL and publishable key: the same public values the app ships with.
+  const SUPABASE_URL = "https://oplbslewjdbjguormuga.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_jW20D0E8-fMIIc_5bzrINQ_A6JZciDE";
+
+  const db = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  const $ = (id) => document.getElementById(id);
+  const say = (text) => { $("msg").textContent = text; };
+  const show = (id) => ["step-email", "step-code", "step-delete"].forEach((s) => $(s).classList.toggle("hidden", s !== id));
+
+  $("send").onclick = async () => {
+    const email = $("email").value.trim().toLowerCase();
+    if (!email.includes("@")) return say("Digite um e-mail válido.");
+    $("send").disabled = true;
+    // should_create_user: false — this page never creates an account.
+    const { error } = await db.auth.signInWithOtp({ email, options: { shouldCreateUser: false } });
+    $("send").disabled = false;
+    if (error) return say("Não encontramos uma conta com esse e-mail, ou houve um erro. Tente de novo em um minuto.");
+    $("sent-to").textContent = email;
+    show("step-code");
+    say("");
+  };
+
+  $("verify").onclick = async () => {
+    const email = $("sent-to").textContent;
+    const token = $("code").value.replace(/\D/g, "");
+    $("verify").disabled = true;
+    const { data, error } = await db.auth.verifyOtp({ email, token, type: "email" });
+    $("verify").disabled = false;
+    if (error) return say("Código errado ou expirado.");
+    $("who").textContent = data.user.email;
+    show("step-delete");
+    say("");
+  };
+
+  $("delete").onclick = async () => {
+    $("delete").disabled = true;
+    const { error } = await db.functions.invoke("delete-account", { method: "POST", body: {} });
+    if (error) { $("delete").disabled = false; return say("Não foi possível excluir agora. Tente de novo ou escreva para lexiread.english@gmail.com."); }
+    await db.auth.signOut();
+    $("step-delete").classList.add("hidden");
+    say("Conta excluída.");
+  };
+</script>
+</body>
+</html>
