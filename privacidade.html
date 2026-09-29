@@ -9,7 +9,7 @@
 <body>
 <main>
   <h1>Política de privacidade do LexiRead</h1>
-  <p class="updated">Última atualização: 28 de setembro de 2026.</p>
+  <p class="updated">Última atualização: 29 de setembro de 2026.</p>
 
   <p>O LexiRead é um app para ler livros em inglês com dicionário, voz e cartões de revisão. Ele é desenvolvido e mantido por um <b>desenvolvedor independente, pessoa física, no Brasil</b>, que é o responsável (controlador) pelos dados descritos aqui, nos termos da Lei Geral de Proteção de Dados (Lei 13.709/2018, LGPD).</p>
   <p>Contato para qualquer assunto de privacidade: <a href="mailto:lexiread.english@gmail.com">lexiread.english@gmail.com</a>.</p>
@@ -34,20 +34,26 @@
   <p><b>Pagamentos:</b> as compras são feitas e cobradas pelo Google Play. Nós não recebemos o número do seu cartão nem outros dados de pagamento; o Google nos informa apenas se a compra existe, se está paga e qual produto foi comprado.</p>
 
   <h2>3. Inteligência artificial</h2>
-  <p>Quando você toca em <b>Criar cartão com IA</b> ou arrasta o dedo sobre um trecho para traduzi-lo, o app envia à OpenAI (empresa sediada nos Estados Unidos), por meio do nosso servidor, apenas:</p>
+  <p>Quando você toca em <b>Criar cartão com IA</b> ou arrasta o dedo sobre um trecho para traduzi-lo, o app envia a um serviço de inteligência artificial, por meio do nosso servidor, apenas:</p>
   <ul>
     <li>a palavra ou o trecho escolhido;</li>
     <li>a frase do livro em volta, como contexto;</li>
     <li>o idioma da tradução.</li>
   </ul>
-  <p>Seu e-mail e o identificador da sua conta <b>não</b> são enviados. Pela política da OpenAI para a API, esses dados não são usados para treinar modelos e podem ser guardados por até 30 dias para prevenção de abuso. Isso é uma transferência internacional de dados, feita para executar o serviço que você pediu (LGPD, art. 33).</p>
-  <p><b>Salvar só a palavra</b> não envia nada à OpenAI: a tradução vem do dicionário embutido e o nosso servidor só desconta um cartão do seu saldo.</p>
+  <p>Usamos dois serviços, os dois sediados nos Estados Unidos:</p>
+  <ul>
+    <li><b>OpenAI</b>, o serviço principal. Pela política da OpenAI para a API, esses dados não são usados para treinar modelos e podem ser guardados por até 30 dias para prevenção de abuso.</li>
+    <li><b>Google (Gemini API)</b>, usado só como reserva, quando a OpenAI está fora do ar ou sobrecarregada. Usamos a versão paga da API, em que o Google não usa esses dados para treinar ou melhorar seus produtos; eles podem ser guardados por um período limitado para prevenção de abuso, como preveem os termos do Google.</li>
+  </ul>
+  <p>Cada pedido vai para um só desses serviços. Seu e-mail e o identificador da sua conta <b>não</b> são enviados a nenhum deles. Isso é uma transferência internacional de dados, feita para executar o serviço que você pediu (LGPD, art. 33).</p>
+  <p><b>Salvar só a palavra</b> não envia nada a serviços de IA: a tradução vem do dicionário embutido e o nosso servidor só desconta um cartão do seu saldo.</p>
 
   <h2>4. Com quem os dados são compartilhados</h2>
   <ul>
     <li><b>Supabase</b>: hospeda a conta, o saldo, os registros e a cópia dos cartões, em servidores na região de São Paulo (Brasil).</li>
     <li><b>Cloudflare</b>: entrega os arquivos dos livros clássicos gratuitos.</li>
     <li><b>OpenAI</b>: gera os cartões e as traduções, como descrito no item 3.</li>
+    <li><b>Google (Gemini API)</b>: gera cartões e traduções só quando a OpenAI falha, como descrito no item 3.</li>
     <li><b>Google</b>: processa as compras pelo Google Play e distribui o app.</li>
   </ul>
   <p>Não vendemos dados e não os usamos para publicidade.</p>
@@ -69,7 +75,7 @@
   <p>Excluir a conta não cancela uma assinatura do Google Play: cancele na Play Store (Pagamentos e assinaturas → Assinaturas).</p>
 
   <h2>7. Segurança</h2>
-  <p>A comunicação com o servidor é criptografada (HTTPS). O login é feito por código de uso único enviado por e-mail, sem senha. As chaves de acesso à OpenAI e ao Google ficam só no servidor, e cada pessoa só consegue ler os próprios dados. Se houver um incidente de segurança que possa trazer risco relevante, comunicaremos você e a Autoridade Nacional de Proteção de Dados (ANPD) nos prazos da regulamentação.</p>
+  <p>A comunicação com o servidor é criptografada (HTTPS). O login é feito por código de uso único enviado por e-mail, sem senha. As chaves de acesso à OpenAI, ao Gemini e ao Google Play ficam só no servidor, e cada pessoa só consegue ler os próprios dados. Se houver um incidente de segurança que possa trazer risco relevante, comunicaremos você e a Autoridade Nacional de Proteção de Dados (ANPD) nos prazos da regulamentação.</p>
 
   <h2>8. Crianças</h2>
   <p>O LexiRead não é destinado a crianças menores de 13 anos, e não coletamos conscientemente dados delas. Se você acredita que uma criança criou uma conta, escreva para o contato acima e a conta será excluída.</p>
